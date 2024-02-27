@@ -1,5 +1,11 @@
+import {Typography} from "@mui/material";
+import AbuseReportForm from "../components/AbuseReportForm/AbuseReportForm.jsx";
+
 export default function AbuseReport(){
     return (
-        <h1>Abuse Report</h1>
+        <>
+            <Typography variant="h4">Form to create abuse Report</Typography>
+            <AbuseReportForm />
+        </>
     )
 }
