@@ -4,9 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {countries} from "./data.js"
 import {useState} from "react";
 
-export default function CountriesListSelect(props) {
-
-    const {value, onChange} = props
+export default function CountriesListSelect({value, handleChange}) {
 
     const [inputValue, setInputValue] = useState("");
     const onInputChange = (e, newInputValue) => setInputValue(newInputValue);
@@ -19,7 +17,7 @@ export default function CountriesListSelect(props) {
             id="country-select"
             options={countries}
             value={value}
-            onChange={onChange}
+            onChange={handleChange}
             inputValue={inputValue}
             onInputChange={onInputChange}
             autoHighlight

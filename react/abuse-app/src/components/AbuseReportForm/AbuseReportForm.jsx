@@ -4,30 +4,36 @@ import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx"
 import {useFormik} from "formik";
 import {ValidateReport} from "./validateAbuseReportForm.js";
 import {useState} from "react";
+import {getReportList, sendReport} from "../../app/AbuseAPI.js";
 
 export default function AbuseReportForm(){
     const validate = ValidateReport;
 
-    const [value, setValue] = useState(null);
-
-
-    const onChange = (e, newValue) => setValue(newValue);
+    const [countryValue, setCountryValue] = useState(null);
+    const onChange = (e, newValue) => setCountryValue(newValue);
 
 
     const formik = useFormik({
         initialValues: {
-            clientToken: "clientToken",
+            clientToken: "someClientToken",
             abusedURL: "",
             email: "",
             reportType: "",
             spamProof: "",
-            //targetCountry: "",
             captchaToken: ""
         },
         validate,
         onSubmit: values => {
-            console.log(values);
-            console.log("targetCountry: " + value?.label )
+            const reportData={
+                abusedURL: values.abusedURL,
+                email: values.email,
+                reportType: values.reportType,
+                spamProof: values.spamProof,
+                targetCountry: countryValue?.label,
+                captchaToken: ''
+            }
+            console.log(reportData);
+            sendReport(reportData)
         },
     });
 
@@ -66,7 +72,7 @@ export default function AbuseReportForm(){
 
             {formik.values.reportType === "gambling" &&
 
-                <CountriesListSelect value={value} onChange={onChange}/>
+                <CountriesListSelect value={countryValue} handleChange={onChange}/>
             }
 
             {formik.values.reportType === "spam" &&
@@ -88,3 +94,8 @@ export default function AbuseReportForm(){
         </form>
     )
 }
+
+
+
+
+
