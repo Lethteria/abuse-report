@@ -1,20 +1,18 @@
-function createClientToken(){
-    const someClientToken = "clientToken";
-    localStorage.setItem("clientToken",someClientToken)
-}
+import {getClientToken} from "./clientTokenServise.js";
+
 
 async function sendReport(report){
 
-    const clientToken = localStorage.getItem("clientToken")
-    const report1 = {...report, clientToken}
-    console.log(report1)
+    const clientToken = getClientToken();
+    //const report1 = {...report, clientToken}
+    //console.log(report1)
     try {
         let response = await fetch("https://profile.short.io/tmp/abuse-report", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8"
             },
-            body: JSON.stringify(report)
+            body: JSON.stringify({...report, clientToken})
         });
         if (response.ok) console.log(response.statusText)
     }
@@ -25,7 +23,7 @@ async function sendReport(report){
 
 async function getReportList(){
 
-    const clientToken = localStorage.getItem("clientToken");
+    const clientToken = getClientToken();
 
     try {
         let response = await fetch(`https://profile.short.io/tmp/abuse-reports?clientToken=${clientToken}`)

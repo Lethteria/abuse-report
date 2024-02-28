@@ -3,8 +3,9 @@ import ReportTypesRadioGroup from "../ReportTypesRadioGroup/ReportTypesRadioGrou
 import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx";
 import {useFormik} from "formik";
 import {ValidateReport} from "./validateAbuseReportForm.js";
-import {useState} from "react";
-import {getReportList, sendReport} from "../../app/AbuseAPI.js";
+import {useEffect, useState} from "react";
+
+import {reCAPTCHA_site_key} from "../../app/constants.js";
 
 export default function AbuseReportForm(){
     const validate = ValidateReport;
@@ -12,10 +13,8 @@ export default function AbuseReportForm(){
     const [countryValue, setCountryValue] = useState(null);
     const onChange = (e, newValue) => setCountryValue(newValue);
 
-
     const formik = useFormik({
         initialValues: {
-            clientToken: "someClientToken",
             abusedURL: "",
             email: "",
             reportType: "",
@@ -24,16 +23,9 @@ export default function AbuseReportForm(){
         },
         validate,
         onSubmit: values => {
-            const reportData={
-                abusedURL: values.abusedURL,
-                email: values.email,
-                reportType: values.reportType,
-                spamProof: values.spamProof,
-                targetCountry: countryValue?.label,
-                captchaToken: ''
-            }
+            const reportData= {...values, targetCountry: countryValue?.label}
             console.log(reportData);
-            sendReport(reportData)
+            //sendReport(reportData)
         },
     });
 
@@ -91,6 +83,7 @@ export default function AbuseReportForm(){
             <Button color="primary" variant="contained" fullWidth type="submit">
                 Submit
             </Button>
+
         </form>
     )
 }

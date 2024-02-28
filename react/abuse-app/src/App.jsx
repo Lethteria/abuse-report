@@ -3,8 +3,14 @@ import AbuseList from "./pages/AbuseList.jsx";
 import AbuseReport from "./pages/AbuseReport.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AbuseLayout from "./components/AbuseLayout.jsx";
+import {useEffect} from "react";
+import {setClientToken} from "./app/clientTokenServise.js";
 
 function App() {
+
+    useEffect(() => {
+        setClientToken();
+    }, []);
 
   return (
       <Routes>
@@ -15,7 +21,8 @@ function App() {
           <Route path="/abuseReport" element={<AbuseReport />} />
         </Route>
 
-          <Route path="/*" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
+
       </Routes>
   )
 }

@@ -1,9 +1,11 @@
 import PageWrap from "../components/PageWrap/PageWrap.jsx";
 
-export default function NotFound(){
+function NotFound(){
     return (
         <PageWrap>
             <h1>404 Page Not Found</h1>
         </PageWrap>
     )
 }
+
+export default NotFound
