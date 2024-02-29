@@ -1,6 +1,6 @@
 import {Typography} from "@mui/material";
 import AbuseReportForm from "../components/AbuseReportForm/AbuseReportForm.jsx";
-import {reCAPTCHA_site_key} from "../app/constants.js";
+import {reCAPTCHA_site_key} from "../constants/constants.js";
 import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 
 function AbuseReport(){

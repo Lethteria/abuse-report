@@ -1,4 +1,4 @@
-export function ValidateReport(values){
+function ValidateReport(values){
     const errors = {};
     const email = values.email.trim();
     const abusedURL = values.abusedURL.trim();
@@ -22,4 +22,6 @@ export function ValidateReport(values){
     }
     return errors;
 }
+
+export {ValidateReport}
 

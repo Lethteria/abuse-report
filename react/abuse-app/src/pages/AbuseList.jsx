@@ -6,11 +6,7 @@ import {getClientToken} from "../services/clientTokenServise.js";
 
 function AbuseList(){
 
-    useEffect(() => {
-        //getReportList();
-    }, []);
-
-    const {data, error, isLoading} = useGetReportsListQuery(getClientToken());
+    const {data, isError, error, isLoading} = useGetReportsListQuery(getClientToken());
 
     if (isLoading) {
         return (
@@ -26,9 +22,13 @@ function AbuseList(){
     }
 
     if (error) {
-        console.log(error)
+        //console.log(isError)
+        //console.log(error)
         return (
-            <h1>Error</h1>
+            <>
+                <h1>Error</h1>
+                <p>Error status: {error.status} Error text: {(error?.data) ? error.data.error : error.error}</p>
+            </>
         )
     }
 }

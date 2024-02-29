@@ -5,28 +5,29 @@ import {useFormik} from "formik";
 import {ValidateReport} from "./validateAbuseReportForm.js";
 import {useCallback, useState} from "react";
 
-import {reCAPTCHA_action} from "../../app/constants.js";
+import {reCAPTCHA_action} from "../../constants/constants.js";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
-import {sendReport} from "../../app/AbuseAPI.js";
 import {useSendReportMutation} from "../../services/AbuseReportService.js";
-import {getClientToken} from "../../services/clientTokenServise.js";
+import SubmitModal from "../SubmitModal/SubmitModal.jsx";
+import {setReportData} from "./setReportData.js";
 
 
 export default function AbuseReportForm(){
 
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleClose = () => {
+        setOpenModal(false);
+    };
+
     const [sendReport, {isLoading, isError, error}] = useSendReportMutation();
-    //console.log(mutationObj);
 
     const { executeRecaptcha } = useGoogleReCaptcha();
 
     const handleReCaptchaVerify = useCallback(async () => {
-        if (!executeRecaptcha) {
-            console.log('Execute recaptcha not yet available');
-            return;
-        }
+        if (!executeRecaptcha) return;
 
         return  await executeRecaptcha(reCAPTCHA_action);
-
     }, [executeRecaptcha]);
 
     const validate = ValidateReport;
@@ -42,24 +43,19 @@ export default function AbuseReportForm(){
             spamProof: ""
         },
         validate,
-        onSubmit: values => {
-            //!!!!!!To trim() all values exept reportType
-            const targetCountry = countryValue ? countryValue.code : "";
-            const clientToken = getClientToken();
-            handleReCaptchaVerify()
-                .then( captchaToken => {
-                    const reportData= {...values, targetCountry, captchaToken, clientToken}
-                    console.log(reportData);
-                    //sendReport()
-                    return sendReport(reportData);
-                }).then(response => {
-                    //console.log(mutationObj);
-                    console.log(response);
-                })
+        onSubmit: async  (values) => {
+            let reportData = await setReportData(values,countryValue, handleReCaptchaVerify);
+            //console.log(reportData);
+            sendReport(reportData)
+                .unwrap()
+                .then((response) => console.log(response))
+                .catch((error) => setOpenModal(true))
+            //if (response?.error?.status === 403 ) console.log("status: " + response?.error?.status);
         },
     });
 
     return (
+        <>
         <form onSubmit={formik.handleSubmit}>
             <TextField
                 variant="standard"
@@ -110,13 +106,17 @@ export default function AbuseReportForm(){
                 />
             }
 
-            {isError && <p>Loading error. Error status:  {error.status} Error text:  {error.error}</p>}
+            {isLoading && <p>Sending report...</p>}
 
             <Button color="primary" variant="contained" fullWidth type="submit">
                 Submit
             </Button>
 
         </form>
+
+        <SubmitModal open={openModal} onClose={handleClose}
+                     isError={isError} error={error}/>
+        </>
     )
 }
 

@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {BASE_URL} from "../app/constants.js";
+import {BASE_URL} from "../constants/constants.js";
 
 export const reportApi = createApi({
     reducerPath: "reportApi",
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+    tagTypes: ["Report"],
     endpoints: (build) => ({
         getReportsList: build.query({
             query: (clientToken) => ({
@@ -12,7 +13,8 @@ export const reportApi = createApi({
                     clientToken: clientToken
                 }
             }),
-            keepUnusedDataFor: 60*60,
+            providesTags: result => ["Report"],
+            keepUnusedDataFor: 60*60*24,
         }),
         sendReport: build.mutation({
             query: (report) => ({
@@ -20,6 +22,7 @@ export const reportApi = createApi({
                 method: "POST",
                 body: report
             }),
+            invalidatesTags: ["Report"],
         })
     }),
 })
