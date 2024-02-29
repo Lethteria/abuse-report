@@ -3,11 +3,32 @@ import ReportTypesRadioGroup from "../ReportTypesRadioGroup/ReportTypesRadioGrou
 import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx";
 import {useFormik} from "formik";
 import {ValidateReport} from "./validateAbuseReportForm.js";
-import {useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 
-import {reCAPTCHA_site_key} from "../../app/constants.js";
+import {reCAPTCHA_action} from "../../app/constants.js";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {sendReport} from "../../app/AbuseAPI.js";
+import {useSendReportMutation} from "../../services/AbuseReportService.js";
+import {getClientToken} from "../../services/clientTokenServise.js";
+
 
 export default function AbuseReportForm(){
+
+    const [sendReport, {isLoading, isError, error}] = useSendReportMutation();
+    //console.log(mutationObj);
+
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    const handleReCaptchaVerify = useCallback(async () => {
+        if (!executeRecaptcha) {
+            console.log('Execute recaptcha not yet available');
+            return;
+        }
+
+        return  await executeRecaptcha(reCAPTCHA_action);
+
+    }, [executeRecaptcha]);
+
     const validate = ValidateReport;
 
     const [countryValue, setCountryValue] = useState(null);
@@ -18,14 +39,23 @@ export default function AbuseReportForm(){
             abusedURL: "",
             email: "",
             reportType: "",
-            spamProof: "",
-            captchaToken: ""
+            spamProof: ""
         },
         validate,
         onSubmit: values => {
-            const reportData= {...values, targetCountry: countryValue?.label}
-            console.log(reportData);
-            //sendReport(reportData)
+            //!!!!!!To trim() all values exept reportType
+            const targetCountry = countryValue ? countryValue.code : "";
+            const clientToken = getClientToken();
+            handleReCaptchaVerify()
+                .then( captchaToken => {
+                    const reportData= {...values, targetCountry, captchaToken, clientToken}
+                    console.log(reportData);
+                    //sendReport()
+                    return sendReport(reportData);
+                }).then(response => {
+                    //console.log(mutationObj);
+                    console.log(response);
+                })
         },
     });
 
@@ -79,6 +109,8 @@ export default function AbuseReportForm(){
                     onChange={formik.handleChange}
                 />
             }
+
+            {isError && <p>Loading error. Error status:  {error.status} Error text:  {error.error}</p>}
 
             <Button color="primary" variant="contained" fullWidth type="submit">
                 Submit

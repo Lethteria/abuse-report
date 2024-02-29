@@ -4,7 +4,7 @@ import AbuseReport from "./pages/AbuseReport.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AbuseLayout from "./components/AbuseLayout.jsx";
 import {useEffect} from "react";
-import {setClientToken} from "./app/clientTokenServise.js";
+import {setClientToken} from "./services/clientTokenServise.js";
 
 function App() {
 

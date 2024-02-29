@@ -1,11 +1,11 @@
-import {getClientToken} from "./clientTokenServise.js";
+import {getClientToken} from "../services/clientTokenServise.js";
 
 
 async function sendReport(report){
 
     const clientToken = getClientToken();
     //const report1 = {...report, clientToken}
-    //console.log(report1)
+    console.log(report)
     try {
         let response = await fetch("https://profile.short.io/tmp/abuse-report", {
             method: "POST",
@@ -14,7 +14,10 @@ async function sendReport(report){
             },
             body: JSON.stringify({...report, clientToken})
         });
-        if (response.ok) console.log(response.statusText)
+        if (response.ok) {
+            //const text = await response.statusText;
+            console.log(response.statusText)
+        }
     }
     catch (e){
         console.log(e)
