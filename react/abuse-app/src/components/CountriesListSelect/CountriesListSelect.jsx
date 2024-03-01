@@ -10,7 +10,6 @@ export default function CountriesListSelect({value, handleChange}) {
     const [inputValue, setInputValue] = useState("");
     const onInputChange = (e, newInputValue) => setInputValue(newInputValue);
 
-
     return (
         <Autocomplete
             className={styles.wrap}

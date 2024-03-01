@@ -11,6 +11,7 @@ import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 import {useSendReportMutation} from "../../services/AbuseReportService.js";
 import SubmitModal from "../SubmitModal/SubmitModal.jsx";
 import {setReportData} from "./setReportData.js";
+import Preloader from "../Preloader/Preloader.jsx";
 
 
 export default function AbuseReportForm(){
@@ -59,8 +60,6 @@ export default function AbuseReportForm(){
         },
     });
 
-
-
     return (
         <>
         <form onSubmit={formik.handleSubmit} className={styles.wrap}>
@@ -107,6 +106,8 @@ export default function AbuseReportForm(){
                     variant="standard"
                     fullWidth
                     margin="normal"
+                    multiline
+                    rows={2}
                     id="spamProof"
                     name="spamProof"
                     label="Spam proof"
@@ -115,13 +116,13 @@ export default function AbuseReportForm(){
                 />
             }
 
-            {isLoading && <p>Sending report...</p>}
-
             <Button className={styles.button} color="primary" variant="contained" fullWidth type="submit">
                 Submit
             </Button>
 
         </form>
+
+        {isLoading && <Preloader />}
 
         <SubmitModal open={openModal} onClose={handleClose}
                      isError={isError} error={error}/>

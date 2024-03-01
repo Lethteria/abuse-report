@@ -1,3 +1,9 @@
 .radiobutton {
-  width: calc(50% - 16px);
+  width: 100%;
+}
+
+@media (min-width: 600px){
+  .radiobutton {
+    width: calc(50% - 16px);
+  }
 }
