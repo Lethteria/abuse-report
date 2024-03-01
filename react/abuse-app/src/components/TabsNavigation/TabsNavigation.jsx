@@ -1,5 +1,6 @@
 import {Link, matchPath, useLocation,} from "react-router-dom";
 import {Tab, Tabs} from "@mui/material";
+import styles from "./TabsNavigation.module.scss"
 
 function useRouteMatch(patterns) {
     const { pathname } = useLocation();
@@ -21,9 +22,7 @@ export default function TabsNavigation(){
 
     return (
 
-        <div>
-            {/*<NavLink to="/abuseList"> Abuse List</NavLink>
-            <NavLink to="/abuseReport"> Abuse Report</NavLink>*/}
+        <div className={styles.wrap}>
             <Tabs value={currentTab} centered >
                 <Tab label="Abuse Report" value="/abuseReport" to="/abuseReport" component={Link} />
                 <Tab label="Abuse List" value="/abuseList" to="/abuseList" component={Link} />

@@ -6,7 +6,7 @@ export default function ReportTypesRadioGroup({value, handleChange}){
 
     return (
         <FormControl fullWidth margin="normal">
-            <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+            <FormLabel id="demo-radio-buttons-group-label">Report type </FormLabel>
             <RadioGroup
                 aria-labelledby="report-types-label"
                 value={value}

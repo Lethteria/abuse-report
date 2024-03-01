@@ -6,7 +6,7 @@ import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 function AbuseReport(){
     return (
         <GoogleReCaptchaProvider reCaptchaKey={reCAPTCHA_site_key}>
-            <Typography variant="h4">Form to create abuse Report</Typography>
+            <Typography variant="h4" align="center">Form to create abuse report</Typography>
             <AbuseReportForm />
         </GoogleReCaptchaProvider>
     )

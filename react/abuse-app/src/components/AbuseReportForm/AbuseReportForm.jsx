@@ -1,3 +1,4 @@
+import styles from "./AbuseReportForm.module.scss";
 import {Button, TextField} from "@mui/material";
 import ReportTypesRadioGroup from "../ReportTypesRadioGroup/ReportTypesRadioGroup.jsx";
 import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx";
@@ -43,28 +44,35 @@ export default function AbuseReportForm(){
             spamProof: ""
         },
         validate,
-        onSubmit: async  (values) => {
+        onSubmit: async  (values, {resetForm}) => {
             let reportData = await setReportData(values,countryValue, handleReCaptchaVerify);
-            //console.log(reportData);
+            console.log(reportData);
             sendReport(reportData)
                 .unwrap()
-                .then((response) => console.log(response))
+                .then((response) => {
+                    console.log(response)
+                    setOpenModal(true);
+                    resetForm();
+                })
                 .catch((error) => setOpenModal(true))
             //if (response?.error?.status === 403 ) console.log("status: " + response?.error?.status);
         },
     });
 
+
+
     return (
         <>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} className={styles.wrap}>
             <TextField
+                className={styles.required}
                 variant="standard"
                 fullWidth
                 margin="normal"
                 required
                 id="url"
                 name="abusedURL"
-                label="abused URL"
+                label="Abused URL"
                 value={formik.values.abusedURL}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -73,6 +81,7 @@ export default function AbuseReportForm(){
             />
 
             <TextField
+                className={styles.required}
                 variant="standard"
                 fullWidth
                 margin="normal"
@@ -100,7 +109,7 @@ export default function AbuseReportForm(){
                     margin="normal"
                     id="spamProof"
                     name="spamProof"
-                    label="Spam Proof"
+                    label="Spam proof"
                     value={formik.values.spamProof}
                     onChange={formik.handleChange}
                 />
@@ -108,7 +117,7 @@ export default function AbuseReportForm(){
 
             {isLoading && <p>Sending report...</p>}
 
-            <Button color="primary" variant="contained" fullWidth type="submit">
+            <Button className={styles.button} color="primary" variant="contained" fullWidth type="submit">
                 Submit
             </Button>
 
@@ -119,6 +128,8 @@ export default function AbuseReportForm(){
         </>
     )
 }
+
+
 
 
 

@@ -1,8 +1,8 @@
-import {getReportList} from "../app/AbuseAPI.js";
-import {useEffect} from "react";
-import {reportApi} from "../services/AbuseReportService.js";
+
 import {useGetReportsListQuery} from "../services/AbuseReportService.js"
 import {getClientToken} from "../services/clientTokenServise.js";
+import {Typography} from "@mui/material";
+import ReportsListBlock from "../components/ReportsListBlock/ReportsListBlock.jsx";
 
 function AbuseList(){
 
@@ -15,15 +15,15 @@ function AbuseList(){
     }
 
     if (data) {
-        console.log(data)
         return (
-            <h1>AbuseList</h1>
+            <>
+                <Typography variant="h4">Abuse reports list</Typography>
+                <ReportsListBlock data={data}/>
+            </>
         )
     }
 
     if (error) {
-        //console.log(isError)
-        //console.log(error)
         return (
             <>
                 <h1>Error</h1>

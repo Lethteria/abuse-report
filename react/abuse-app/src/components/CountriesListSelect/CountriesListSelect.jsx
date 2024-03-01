@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import {countries} from "./data.js"
 import {useState} from "react";
+import styles from "./CountriesListSelect.module.scss";
 
 export default function CountriesListSelect({value, handleChange}) {
 
@@ -12,9 +13,9 @@ export default function CountriesListSelect({value, handleChange}) {
 
     return (
         <Autocomplete
+            className={styles.wrap}
             fullWidth
-            margin="normal"
-            id="country-select"
+            id="countrySelect"
             options={countries}
             value={value}
             onChange={handleChange}
@@ -23,13 +24,14 @@ export default function CountriesListSelect({value, handleChange}) {
             autoHighlight
             getOptionLabel={(option) => option.label}
             renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <Box component="li" {...props}>
                     <img
+                        className={styles.flag}
                         loading="lazy"
                         width="20"
                         srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                         src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                        alt=""
+                        alt={`${option.label} flag`}
                     />
                     {option.label} ({option.code})
                 </Box>
@@ -37,11 +39,8 @@ export default function CountriesListSelect({value, handleChange}) {
             renderInput={(params) => (
                 <TextField
                     {...params}
+                    variant="standard"
                     label="Choose a country"
-                    inputProps={{
-                        ...params.inputProps,
-                        autoComplete: 'new-password', // disable autocomplete and autofill
-                    }}
                 />
             )}
         />
