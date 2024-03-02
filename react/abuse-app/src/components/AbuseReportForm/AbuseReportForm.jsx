@@ -22,9 +22,9 @@ function AbuseReportForm(){
 
     const [openModal, setOpenModal] = useState(false);
 
-    const handleClose = () => {
+    function onCloseModal(){
         setOpenModal(false);
-    };
+    }
 
     const [sendReport, {isLoading, isError, error}] = useSendReportMutation();
 
@@ -39,7 +39,10 @@ function AbuseReportForm(){
     const validate = validateReport;
 
     const [countryValue, setCountryValue] = useState(null);
-    const onChange = (e, newValue) => setCountryValue(newValue);
+
+    function onChange(e, newValue){
+        setCountryValue(newValue);
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -128,8 +131,9 @@ function AbuseReportForm(){
 
         {isLoading && <Preloader />}
 
-        <SubmitModal open={openModal} onClose={handleClose}
-                     isError={isError} error={error}/>
+        <SubmitModal open={openModal} onClose={onCloseModal}
+                     isError={isError} error={error}
+        />
         </>
     )
 }
