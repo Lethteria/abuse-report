@@ -8,7 +8,7 @@ async function setReportData(formicValues, countryValue, getCaptchaToken){
     const targetCountry = countryValue ? countryValue.code : "";
     const clientToken = getClientToken();
     const captchaToken = await getCaptchaToken();
-    return {...trimFormicValues, targetCountry, captchaToken, clientToken}
+    return {...trimFormicValues,  targetCountry, captchaToken, clientToken}
 }
 
 export {setReportData}

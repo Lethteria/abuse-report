@@ -1,5 +1,5 @@
 function setClientToken(){
-    const someClientToken = "clientToken";
+    const someClientToken = "someClientToken";
     localStorage.setItem("clientToken",someClientToken)
 }
 

@@ -1,15 +1,16 @@
-import {useCallback, useState} from "react";
+import {useCallback, useRef, useState} from "react";
 
 import {useFormik} from "formik";
 import {validateReport} from "./validateAbuseReportForm.js";
 
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
-import {reCAPTCHA_action} from "../../constants/constants.js";
+import {reCAPTCHA2_site_key, reCAPTCHA3_action} from "../../constants/constants.js";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import {useSendReportMutation} from "../../services/abuseReportService.js";
 import {setReportData} from "./setReportData.js";
 
-import {Button, TextField} from "@mui/material";
+import {Button, TextField, Typography} from "@mui/material";
 import ReportTypesRadioGroup from "../ReportTypesRadioGroup/ReportTypesRadioGroup.jsx";
 import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx";
 import SubmitModal from "../SubmitModal/SubmitModal.jsx";
@@ -33,8 +34,15 @@ function AbuseReportForm(){
     const handleReCaptchaVerify = useCallback(async () => {
         if (!executeRecaptcha) return;
 
-        return  await executeRecaptcha(reCAPTCHA_action);
+        return  await executeRecaptcha(reCAPTCHA3_action);
     }, [executeRecaptcha]);
+
+    const recaptcha2Ref = useRef();
+    const [recaptcha2, setRecaptcha2] = useState(false);
+    const [invalidRecaptcha2, setInvalidRecaptcha2] = useState(false);
+    function onChangeRecapcha2(){
+        setInvalidRecaptcha2(prevState => !prevState);
+    }
 
     const validate = validateReport;
 
@@ -54,16 +62,34 @@ function AbuseReportForm(){
         validate,
         onSubmit: async  (values, {resetForm}) => {
             let reportData = await setReportData(values,countryValue, handleReCaptchaVerify);
-            console.log(reportData);
+
+            if ( recaptcha2 ) {
+
+                const captcha2Token = recaptcha2Ref.current.getValue();
+                if (!captcha2Token) {
+                    setInvalidRecaptcha2(true);
+                    return;
+                }
+                reportData = {...reportData, captcha2Token}
+            }
+
             sendReport(reportData)
                 .unwrap()
                 .then((response) => {
-                    console.log(response)
                     setOpenModal(true);
                     resetForm();
+
+                    if (recaptcha2) {
+                        setRecaptcha2(false);
+                        recaptcha2Ref.current.reset();
+                    }
                 })
-                .catch((error) => setOpenModal(true))
-            //if (response?.error?.status === 403 ) console.log("status: " + response?.error?.status);
+                .catch((error) => {
+
+                    if( error?.status === 403 ){
+                        setRecaptcha2(true);
+                    } else setOpenModal(true);
+                })
         },
     });
 
@@ -122,6 +148,14 @@ function AbuseReportForm(){
                     onChange={formik.handleChange}
                 />
             }
+
+            {recaptcha2 &&
+                <>
+                    <ReCAPTCHA ref={recaptcha2Ref} sitekey={reCAPTCHA2_site_key} onChange={onChangeRecapcha2}/>
+                    {invalidRecaptcha2 && <Typography variant="body2" color="error">Required</Typography>}
+                </>
+            }
+
 
             <Button className={styles.button} color="primary" variant="contained" fullWidth type="submit">
                 Submit

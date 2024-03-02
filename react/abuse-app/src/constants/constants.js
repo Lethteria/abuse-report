@@ -1,8 +1,10 @@
-//Recaptcha 3 client secret: 6LdO8JcUAAAAAJWQi_B27yDFuShbD2Cvq4AqcOCQ, action=abuse
-// Recaptcha 2 site key: 6Ld0EWEUAAAAAFSnSvsm-azMwTHMbi5kdw1qmEti
 
 const BASE_URL = "https://profile.short.io/tmp/";
-const reCAPTCHA_site_key = "6LdO8JcUAAAAAJWQi_B27yDFuShbD2Cvq4AqcOCQ";
-const reCAPTCHA_action = "abuse";
 
-export {reCAPTCHA_site_key, reCAPTCHA_action, BASE_URL}
+const reCAPTCHA3_site_key = "6LdO8JcUAAAAAJWQi_B27yDFuShbD2Cvq4AqcOCQ";
+
+const reCAPTCHA3_action = "abuse";
+
+const reCAPTCHA2_site_key = "6Ld0EWEUAAAAAFSnSvsm-azMwTHMbi5kdw1qmEti";
+
+export {reCAPTCHA3_site_key, reCAPTCHA3_action, reCAPTCHA2_site_key, BASE_URL}
