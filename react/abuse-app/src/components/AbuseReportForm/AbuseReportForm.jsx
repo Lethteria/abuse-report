@@ -8,7 +8,7 @@ import {useCallback, useState} from "react";
 
 import {reCAPTCHA_action} from "../../constants/constants.js";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
-import {useSendReportMutation} from "../../services/AbuseReportService.js";
+import {useSendReportMutation} from "../../services/abuseReportService.js";
 import SubmitModal from "../SubmitModal/SubmitModal.jsx";
 import {setReportData} from "./setReportData.js";
 import Preloader from "../Preloader/Preloader.jsx";

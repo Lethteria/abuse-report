@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {BASE_URL} from "../constants/constants.js";
+import {mapResponseData} from "../helpers/mapResponseData.js";
 
 export const reportApi = createApi({
     reducerPath: "reportApi",
@@ -13,6 +14,7 @@ export const reportApi = createApi({
                     clientToken: clientToken
                 }
             }),
+            transformResponse: (response, meta, arg) => mapResponseData(response),
             providesTags: result => ["Report"],
             keepUnusedDataFor: 60*60*24,
         }),

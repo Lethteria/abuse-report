@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import {countries} from "./data.js"
+import {countries} from "../../countriesList.js"
 import {useState} from "react";
 import styles from "./CountriesListSelect.module.scss";
 

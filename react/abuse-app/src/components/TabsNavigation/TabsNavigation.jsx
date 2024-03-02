@@ -21,7 +21,6 @@ export default function TabsNavigation(){
     const currentTab = routeMatch?.pattern?.path;
 
     return (
-
         <div className={styles.wrap}>
             <Tabs value={currentTab} centered >
                 <Tab label="Abuse Report" value="/abuseReport" to="/abuseReport" component={Link} />

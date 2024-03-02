@@ -1,5 +1,5 @@
 
-import {useGetReportsListQuery} from "../services/AbuseReportService.js"
+import {useGetReportsListQuery} from "../services/abuseReportService.js"
 import {getClientToken} from "../services/clientTokenServise.js";
 import {Typography} from "@mui/material";
 import ReportsListBlock from "../components/ReportsListBlock/ReportsListBlock.jsx";
