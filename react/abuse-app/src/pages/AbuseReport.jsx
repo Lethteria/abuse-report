@@ -1,7 +1,8 @@
+import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
+import {reCAPTCHA_site_key} from "../constants/constants.js";
+
 import {Typography} from "@mui/material";
 import AbuseReportForm from "../components/AbuseReportForm/AbuseReportForm.jsx";
-import {reCAPTCHA_site_key} from "../constants/constants.js";
-import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 
 function AbuseReport(){
     return (
@@ -12,4 +13,4 @@ function AbuseReport(){
     )
 }
 
-export default AbuseReport
+export default AbuseReport;

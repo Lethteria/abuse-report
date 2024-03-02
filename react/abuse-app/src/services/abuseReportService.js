@@ -14,7 +14,7 @@ export const reportApi = createApi({
                     clientToken: clientToken
                 }
             }),
-            transformResponse: (response, meta, arg) => mapResponseData(response),
+            transformResponse: (response) => mapResponseData(response),
             providesTags: result => ["Report"],
             keepUnusedDataFor: 60*60*24,
         }),

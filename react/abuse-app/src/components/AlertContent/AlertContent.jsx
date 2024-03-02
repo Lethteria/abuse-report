@@ -1,5 +1,5 @@
 import {AlertTitle, IconButton} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close.js";
+import CloseIcon from "@mui/icons-material/Close";
 
 function AlertContent({title, onCloseModal, children}){
     return (

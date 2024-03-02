@@ -1,20 +1,24 @@
-import styles from "./AbuseReportForm.module.scss";
+import {useCallback, useState} from "react";
+
+import {useFormik} from "formik";
+import {validateReport} from "./validateAbuseReportForm.js";
+
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {reCAPTCHA_action} from "../../constants/constants.js";
+
+import {useSendReportMutation} from "../../services/abuseReportService.js";
+import {setReportData} from "./setReportData.js";
+
 import {Button, TextField} from "@mui/material";
 import ReportTypesRadioGroup from "../ReportTypesRadioGroup/ReportTypesRadioGroup.jsx";
 import CountriesListSelect from "../CountriesListSelect/CountriesListSelect.jsx";
-import {useFormik} from "formik";
-import {ValidateReport} from "./validateAbuseReportForm.js";
-import {useCallback, useState} from "react";
-
-import {reCAPTCHA_action} from "../../constants/constants.js";
-import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
-import {useSendReportMutation} from "../../services/abuseReportService.js";
 import SubmitModal from "../SubmitModal/SubmitModal.jsx";
-import {setReportData} from "./setReportData.js";
 import Preloader from "../Preloader/Preloader.jsx";
 
+import styles from "./AbuseReportForm.module.scss";
 
-export default function AbuseReportForm(){
+
+function AbuseReportForm(){
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -32,7 +36,7 @@ export default function AbuseReportForm(){
         return  await executeRecaptcha(reCAPTCHA_action);
     }, [executeRecaptcha]);
 
-    const validate = ValidateReport;
+    const validate = validateReport;
 
     const [countryValue, setCountryValue] = useState(null);
     const onChange = (e, newValue) => setCountryValue(newValue);
@@ -129,6 +133,8 @@ export default function AbuseReportForm(){
         </>
     )
 }
+
+export default AbuseReportForm;
 
 
 

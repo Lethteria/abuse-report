@@ -1,11 +1,14 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import {countries} from "../../countriesList.js"
 import {useState} from "react";
+
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+
+import {countries} from "../../countriesList.js"
+
 import styles from "./CountriesListSelect.module.scss";
 
-export default function CountriesListSelect({value, handleChange}) {
+function CountriesListSelect({value, handleChange}) {
 
     const [inputValue, setInputValue] = useState("");
     const onInputChange = (e, newInputValue) => setInputValue(newInputValue);
@@ -45,3 +48,5 @@ export default function CountriesListSelect({value, handleChange}) {
         />
     );
 }
+
+export default CountriesListSelect;

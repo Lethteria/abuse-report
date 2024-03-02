@@ -1,4 +1,5 @@
 import {Outlet} from "react-router-dom";
+
 import PageWrap from "./PageWrap/PageWrap.jsx";
 import TabsNavigation from "./TabsNavigation/TabsNavigation.jsx";
 

@@ -1,13 +1,13 @@
-
 import {useGetReportsListQuery} from "../services/abuseReportService.js"
 import {getClientToken} from "../services/clientTokenServise.js";
+
 import {Typography} from "@mui/material";
 import ReportsListBlock from "../components/ReportsListBlock/ReportsListBlock.jsx";
 import Preloader from "../components/Preloader/Preloader.jsx";
 
 function AbuseList(){
 
-    const {data, isError, error, isLoading} = useGetReportsListQuery(getClientToken());
+    const {data, error, isLoading} = useGetReportsListQuery(getClientToken());
 
     if (isLoading) {
         return <Preloader />
@@ -32,5 +32,5 @@ function AbuseList(){
     }
 }
 
-export default AbuseList
+export default AbuseList;
 

@@ -1,8 +1,10 @@
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+
 import {reportTypesData} from "./data.js";
+
 import styles from "./ReportTypesRadioGroup.module.scss";
 
-export default function ReportTypesRadioGroup({value, handleChange}){
+function ReportTypesRadioGroup({value, handleChange}){
 
     return (
         <FormControl fullWidth margin="normal">
@@ -27,3 +29,5 @@ export default function ReportTypesRadioGroup({value, handleChange}){
         </FormControl>
     )
 }
+
+export default ReportTypesRadioGroup;

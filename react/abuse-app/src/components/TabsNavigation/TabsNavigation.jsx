@@ -1,21 +1,11 @@
-import {Link, matchPath, useLocation,} from "react-router-dom";
+import {useRouteMatch} from "../../hooks/useRouteMatch.js";
+import {Link} from "react-router-dom";
+
 import {Tab, Tabs} from "@mui/material";
+
 import styles from "./TabsNavigation.module.scss"
 
-function useRouteMatch(patterns) {
-    const { pathname } = useLocation();
-
-    for (let i = 0; i < patterns.length; i += 1) {
-        const pattern = patterns[i];
-        const possibleMatch = matchPath(pattern, pathname);
-        if (possibleMatch !== null) {
-            return possibleMatch;
-        }
-    }
-
-    return null;
-}
-export default function TabsNavigation(){
+function TabsNavigation(){
 
     const routeMatch = useRouteMatch(['/abuseReport', '/abuseList']);
     const currentTab = routeMatch?.pattern?.path;
@@ -29,3 +19,5 @@ export default function TabsNavigation(){
         </div>
     )
 }
+
+export default TabsNavigation;

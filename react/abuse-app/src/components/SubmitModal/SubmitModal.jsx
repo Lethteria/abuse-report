@@ -1,8 +1,9 @@
 import {Alert, Dialog} from "@mui/material";
-import styles from "./SubmitModal.module.scss";
 import AlertContent from "../AlertContent/AlertContent.jsx";
 
-export default function SubmitModal(props) {
+import styles from "./SubmitModal.module.scss";
+
+function SubmitModal(props) {
     const { onClose, open, isError, error } = props;
 
     return (
@@ -28,3 +29,5 @@ export default function SubmitModal(props) {
         </Dialog>
     );
 }
+
+export default SubmitModal;

@@ -1,10 +1,12 @@
+import {useEffect} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
+import {setClientToken} from "./services/clientTokenServise.js";
+
 import AbuseList from "./pages/AbuseList.jsx";
 import AbuseReport from "./pages/AbuseReport.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AbuseLayout from "./components/AbuseLayout.jsx";
-import {useEffect} from "react";
-import {setClientToken} from "./services/clientTokenServise.js";
+
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import {theme} from "./theme/theme.js";
 
@@ -17,6 +19,7 @@ function App() {
   return (
       <ThemeProvider theme={theme}>
           <CssBaseline/>
+
           <Routes>
 
               <Route path="/" element={<AbuseLayout />}>
@@ -28,6 +31,7 @@ function App() {
               <Route path="/*" element={<NotFound />} />
 
           </Routes>
+
       </ThemeProvider>
   )
 }

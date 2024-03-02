@@ -1,5 +1,5 @@
-import styles from "../ReportsListBlock/ReportsListBlock.module.scss";
 import {Typography} from "@mui/material";
+import styles from "./ReportContent.module.scss";
 
 function ReportContent({report}){
 

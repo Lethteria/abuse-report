@@ -1,7 +1,7 @@
 import {Container, Paper} from "@mui/material";
 import styles from "./pageWrap.module.scss";
 
-export default function PageWrap({children}){
+function PageWrap({children}){
     return (
         <Container maxWidth="md">
             <div className={styles.wrap}>
@@ -14,3 +14,5 @@ export default function PageWrap({children}){
         </Container>
     )
 }
+
+export default PageWrap;
